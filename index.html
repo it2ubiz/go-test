@@ -1,0 +1,42 @@
+<head>	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () { 
+                $('#submit').click(function () {
+                    $('#result').html("")
+                    var vA =JSON.parse($("#A").val()),
+                    vB =JSON.parse($("#B").val()),
+                    vC =JSON.parse($("#C").val());
+                    dt = '{"A":'+vA+', "B":'+vB+', "C":'+vC+', "D":'+$("#D").val()+', "E":'+$("#E").val()+', "F":'+$("#F").val()+'}'
+                    $.ajax({
+                    url: 'http://localhost:8000/',
+                    type: 'post',
+                    crossDomain: true,
+                    data : dt,
+                    success : function(data) {
+                        $('#result').append("<label>H = "+data.H+"<br> K = "+data.K+"</label>");
+                        console.log(data)
+                    },
+                    error : function (error){
+                        $('#result').append("<label>Error = "+error.responseText+"</label>");
+                        console.log(error)
+                    }
+                    });
+                });
+        });
+    </script>
+</head>    
+<html>
+    <body>
+        <form id="form1" method="post">
+            <label><input id= "A" type="text" name="A" > A </label><br><br>
+            <label><input id= "B" type="text" name="B" > B </label><br><br>
+            <label><input id= "C" type="text" name="C" > C </label><br><br>
+            <input id= "D" type="text" name="D" value="1.45"><br><br>
+            <input id= "E" type="text" name="E" value="10"><br><br>
+            <input id= "F" type="text" name="F" value="20"><br><br>
+            <input id= "submit" type="button" name="submit" value="Submit"><br><br>
+        </form>
+        <div id="result" name="result"></div>
+    </body>
+</html>
